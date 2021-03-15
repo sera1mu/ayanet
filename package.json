@@ -1,0 +1,9 @@
+{
+  "name": "ayanet",
+  "version": "0.1.0",
+  "description": "The discord bot that connects servers to servers",
+  "repository": "git@github.com:sera1mu/ayanet.git",
+  "author": "sera1mu <ifrea0281@gmail.com>",
+  "license": "AGPL-3.0",
+  "private": true
+}
