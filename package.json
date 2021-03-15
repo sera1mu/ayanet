@@ -13,6 +13,9 @@
     "lint": "eslint 'src/**/*.ts'",
     "lint:editorconfig": "editorconfig-checker -exclude '(?:LICENSE|dist)'"
   },
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  },
   "devDependencies": {
     "@types/node": "^14.14.34",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
