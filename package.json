@@ -6,6 +6,13 @@
   "author": "sera1mu <ifrea0281@gmail.com>",
   "license": "AGPL-3.0",
   "private": true,
+  "scripts": {
+    "build": "yarn run lint:editorconfig && yarn run fmt:check && yarn run lint && tsc",
+    "fmt": "prettier --write 'src/**/*.ts'",
+    "fmt:check": "prettier --check 'src/**/*.ts'",
+    "lint": "eslint 'src/**/*.ts'",
+    "lint:editorconfig": "editorconfig-checker -exclude '(?:LICENSE|dist)'"
+  },
   "devDependencies": {
     "@types/node": "^14.14.34",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
