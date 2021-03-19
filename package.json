@@ -14,7 +14,8 @@
     "lint:editorconfig": "editorconfig-checker -exclude '(?:LICENSE|dist)'"
   },
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.1",
+    "toml": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.34",
