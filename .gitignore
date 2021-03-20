@@ -11,3 +11,7 @@ node_modules/
 
 # Local History for Visual Studio Code
 .history/
+
+### Other ###
+# Build files
+dist/
