@@ -31,8 +31,6 @@ export default function boot(): Discord.Client {
   logger.info('Starting server...');
 
   const client = new Discord.Client();
-  // Login client
-  client.login(config.token);
 
   client.on('ready', () => {
     // Set status
@@ -45,6 +43,9 @@ export default function boot(): Discord.Client {
     logger.info('Done!');
     logger.info(`Logged in as @${client.user?.tag} (${client.user?.id})`);
   });
+
+  // Login client
+  client.login(config.token);
 
   return client;
 }
