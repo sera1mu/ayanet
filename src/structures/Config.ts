@@ -20,6 +20,9 @@ interface IConfig {
 const isConfig = (value: any): value is IConfig =>
   typeof value.token === 'string';
 
+/**
+ * The configuration class
+ */
 export default class Config implements IConfig {
   /**
    * The file path of the config
