@@ -14,11 +14,18 @@ interface IConfig {
    * The logger level
    */
   logLevel: LogLevel;
+
+  /**
+   * The bot pre
+   */
+  prefix: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isConfig = (value: any): value is IConfig =>
-  typeof value.token === 'string';
+  typeof value.token === 'string' &&
+  typeof value.logLevel === 'string' &&
+  typeof value.prefix === 'string';
 
 /**
  * The configuration class
@@ -33,9 +40,15 @@ export default class Config implements IConfig {
 
   logLevel: LogLevel;
 
+  prefix: string;
+
   constructor(filePath: string) {
     this.filePath = path.join(process.cwd(), filePath);
-    ({ token: this.token, logLevel: this.logLevel } = Config.parseConfig(
+    ({
+      token: this.token,
+      logLevel: this.logLevel,
+      prefix: this.prefix,
+    } = Config.parseConfig(
       fs.readFileSync(this.filePath, { encoding: 'utf-8' })
     ));
   }
