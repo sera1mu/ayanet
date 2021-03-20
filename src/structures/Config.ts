@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import toml from 'toml';
 
+type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal';
+
 interface IConfig {
   /**
    * The bot token
@@ -11,7 +13,7 @@ interface IConfig {
   /**
    * The logger level
    */
-  logLevel: boolean;
+  logLevel: LogLevel;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,7 +28,7 @@ export default class Config implements IConfig {
 
   token: string;
 
-  logLevel: boolean;
+  logLevel: LogLevel;
 
   constructor(filePath: string) {
     this.filePath = path.join(process.cwd(), filePath);
