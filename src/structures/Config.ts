@@ -7,6 +7,11 @@ interface IConfig {
    * The bot token
    */
   token: string;
+
+  /**
+   * The logger level
+   */
+  logLevel: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,11 +26,13 @@ export default class Config implements IConfig {
 
   token: string;
 
+  logLevel: boolean;
+
   constructor(filePath: string) {
     this.filePath = path.join(process.cwd(), filePath);
-    this.token = Config.parseConfig(
+    ({ token: this.token, logLevel: this.logLevel } = Config.parseConfig(
       fs.readFileSync(this.filePath, { encoding: 'utf-8' })
-    ).token;
+    ));
   }
 
   private static parseConfig(config: string): IConfig {
