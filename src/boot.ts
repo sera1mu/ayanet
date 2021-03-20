@@ -5,9 +5,14 @@ import log4js from 'log4js';
 import Config from './structures/Config';
 import { VERSION } from './util/constants';
 
+/**
+ * Boot system
+ * @returns { Discord.Client } Logged client
+ */
 export default function boot(): Discord.Client {
   process.title = 'Ayanet';
 
+  // Show ASCII art
   console.log('                                 _   ');
   console.log('     /\\                         | |  ');
   console.log('    /  \\  _   _  __ _ _ __   ___| |_ ');
@@ -17,6 +22,7 @@ export default function boot(): Discord.Client {
   console.log('          __/ |                     ');
   console.log(`          |___/                      v${VERSION}\n`);
 
+  // Load config
   const config = new Config(process.env.CONFIG_PATH);
 
   const logger = log4js.getLogger('boot');
@@ -25,9 +31,11 @@ export default function boot(): Discord.Client {
   logger.info('Starting server...');
 
   const client = new Discord.Client();
+  // Login client
   client.login(config.token);
 
   client.on('ready', () => {
+    // Set status
     client.user?.setPresence({
       activity: {
         type: 'PLAYING',
