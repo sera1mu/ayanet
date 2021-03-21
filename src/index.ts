@@ -3,8 +3,6 @@ import boot from './boot';
 
 const logger = log4js.getLogger();
 
-(async () => {
-  await boot();
-})().catch((err) => {
+boot().catch((err) => {
   logger.error(`Failed to boot: ${String(err)}`);
 });
