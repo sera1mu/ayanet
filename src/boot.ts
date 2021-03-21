@@ -9,7 +9,7 @@ import { VERSION } from './util/constants';
  * Boot system
  * @returns { Discord.Client } Logged client
  */
-export default function boot(): Discord.Client {
+export default async function boot(): Promise<Discord.Client> {
   process.title = 'Ayanet';
 
   // Show ASCII art
@@ -34,18 +34,29 @@ export default function boot(): Discord.Client {
 
   client.on('ready', () => {
     // Set status
-    client.user?.setPresence({
-      activity: {
-        type: 'PLAYING',
-        name: `v${VERSION}`,
-      },
-    });
-    logger.info('Done!');
-    logger.info(`Logged in as @${client.user?.tag} (${client.user?.id})`);
+    (async () => {
+      await client.user?.setPresence({
+        activity: {
+          type: 'PLAYING',
+          name: `v${VERSION}`,
+        },
+      });
+    })()
+      .then(() => {
+        logger.info('Done!');
+        logger.info(
+          `Logged in as @${client.user?.tag || 'unknown'} (${
+            client.user?.id || 'unknown'
+          })`
+        );
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
   });
 
   // Login client
-  client.login(config.token);
+  await client.login(config.token);
 
   return client;
 }

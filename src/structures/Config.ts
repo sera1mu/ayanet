@@ -23,8 +23,11 @@ interface IConfig {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isConfig = (value: any): value is IConfig =>
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   typeof value.token === 'string' &&
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   typeof value.logLevel === 'string' &&
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   typeof value.prefix === 'string';
 
 /**
@@ -54,6 +57,7 @@ export default class Config implements IConfig {
   }
 
   private static parseConfig(config: string): IConfig {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const parsedConfig = toml.parse(config);
     if (!isConfig(parsedConfig)) {
       throw new Error('The config is incorrect.');
