@@ -9,7 +9,7 @@ import { VERSION } from './util/constants';
  * Boot system
  * @returns { Discord.Client } Logged client
  */
-export default async function boot(): Promise<Discord.Client> {
+export default async function boot(config: Config): Promise<Discord.Client> {
   process.title = 'Ayanet';
 
   // Show ASCII art
@@ -21,13 +21,6 @@ export default async function boot(): Promise<Discord.Client> {
   console.log(' /_/    \\_\\__, |\\__,_|_| |_|\\___|\\__|');
   console.log('          __/ |                     ');
   console.log(`          |___/                      v${VERSION}\n`);
-
-  if (typeof process.env.CONFIG_PATH === 'undefined') {
-    throw new Error('Not specified CONFIG_PATH in environment variables.');
-  }
-
-  // Load config
-  const config = new Config(process.env.CONFIG_PATH);
 
   const logger = log4js.getLogger('boot');
   logger.level = config.logLevel;
