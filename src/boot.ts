@@ -4,6 +4,7 @@ import Discord from 'discord.js';
 import log4js from 'log4js';
 import Config from './structures/Config';
 import { VERSION } from './util/constants';
+import onReady from './events/ready';
 
 /**
  * Boot system
@@ -29,28 +30,7 @@ export default async function boot(config: Config): Promise<Discord.Client> {
 
   const client = new Discord.Client();
 
-  client.on('ready', () => {
-    // Set status
-    (async () => {
-      await client.user?.setPresence({
-        activity: {
-          type: 'PLAYING',
-          name: `v${VERSION}`,
-        },
-      });
-    })()
-      .then(() => {
-        logger.info('Done!');
-        logger.info(
-          `Logged in as @${client.user?.tag || 'unknown'} (${
-            client.user?.id || 'unknown'
-          })`
-        );
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
-  });
+  client.on('ready', () => onReady(client, logger));
 
   // Login client
   await client.login(config.token);
