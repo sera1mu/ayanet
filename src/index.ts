@@ -1,6 +1,6 @@
-import log4js from 'log4js';
-import boot from './boot';
-import Config from './structures/Config';
+import { getLogger } from 'log4js';
+import { boot } from './boot';
+import { Config } from './structures/Config';
 
 if (typeof process.env.CONFIG_PATH === 'undefined') {
   throw new Error('Not specified CONFIG_PATH in environment variables.');
@@ -8,7 +8,7 @@ if (typeof process.env.CONFIG_PATH === 'undefined') {
 // Load config
 const config = new Config(process.env.CONFIG_PATH);
 
-const logger = log4js.getLogger();
+const logger = getLogger();
 logger.level = config.logLevel;
 
 boot(config).catch((err) => {

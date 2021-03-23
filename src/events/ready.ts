@@ -5,7 +5,10 @@ import { VERSION } from '../util/constants';
 /**
  * Client ready event
  */
-export default function onReady(client: Client, logger: Logger): void {
+export const onReady = function clientOnReadyEvent(
+  client: Client,
+  logger: Logger
+): void {
   // Set status
   (async () => {
     await client.user?.setPresence({
@@ -26,4 +29,4 @@ export default function onReady(client: Client, logger: Logger): void {
     .catch((err) => {
       throw new Error(err);
     });
-}
+};

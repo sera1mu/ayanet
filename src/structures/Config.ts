@@ -33,7 +33,7 @@ const isConfig = (value: any): value is IConfig =>
 /**
  * The configuration class
  */
-export default class Config implements IConfig {
+export class Config implements IConfig {
   /**
    * The file path of the config
    */

@@ -1,16 +1,16 @@
 /* eslint-disable no-console */
 
-import Discord from 'discord.js';
-import log4js from 'log4js';
-import Config from './structures/Config';
+import { Client } from 'discord.js';
+import { getLogger } from 'log4js';
+import { Config } from './structures/Config';
 import { VERSION } from './util/constants';
-import onReady from './events/ready';
+import { onReady } from './events/ready';
 
 /**
  * Boot system
  * @returns { Discord.Client } Logged client
  */
-export default async function boot(config: Config): Promise<Discord.Client> {
+export const boot = async function bootSystem(config: Config): Promise<Client> {
   process.title = 'Ayanet';
 
   // Show ASCII art
@@ -23,12 +23,12 @@ export default async function boot(config: Config): Promise<Discord.Client> {
   console.log('          __/ |                     ');
   console.log(`          |___/                      v${VERSION}\n`);
 
-  const logger = log4js.getLogger('boot');
+  const logger = getLogger('boot');
   logger.level = config.logLevel;
 
   logger.info('Starting server...');
 
-  const client = new Discord.Client();
+  const client = new Client();
 
   client.on('ready', () => onReady(client, logger));
 
@@ -36,4 +36,4 @@ export default async function boot(config: Config): Promise<Discord.Client> {
   await client.login(config.token);
 
   return client;
-}
+};
