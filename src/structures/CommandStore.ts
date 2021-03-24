@@ -11,6 +11,10 @@ export class CommandStore {
     return this.commands[name];
   }
 
+  getAllCommands(): Record<string, Command> {
+    return this.commands;
+  }
+
   addCommand(...commands: Command[]): void {
     for (const command of commands) {
       this.commands[command.name] = command;
