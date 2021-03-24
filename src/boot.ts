@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 
-import { Client } from 'discord.js';
 import { getLogger } from 'log4js';
+import { Client } from 'discord.js';
 import { Config } from './structures/Config';
 import { VERSION } from './util/constants';
 import { onReady } from './events/ready';
 import { onMessage } from './events/message';
-import { CommandStore } from './structures/CommandStore';
+import { AyanetClient } from './structures/Client';
 
 /**
  * Boot system
@@ -30,13 +30,14 @@ export const boot = async function bootSystem(config: Config): Promise<Client> {
 
   logger.info('Starting server...');
 
-  const client = new Client();
-  const store = new CommandStore();
+  const client = new AyanetClient();
 
   // Events
   client.on('ready', () => onReady(client, logger));
   client.on('message', (message) => {
-    onMessage(store, config, message).catch((err) => logger.error(err));
+    onMessage(client.commandStore, config, message).catch((err) =>
+      logger.error(err)
+    );
   });
 
   // Login client

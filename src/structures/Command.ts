@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 
-interface CommandOptions {
+export interface CommandOptions {
   /**
    * Command name
    */
@@ -62,5 +62,9 @@ export class Command implements CommandOptions {
    * @param message Message event
    * @param params Command params
    */
-  run?(message: Message, params: string[]): Promise<void>;
+  run?(
+    commands: Record<string, this>,
+    message: Message,
+    params: string[]
+  ): Promise<void>;
 }
