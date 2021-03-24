@@ -30,6 +30,9 @@ interface CommandOptions {
   readonly onlyAdmin: boolean;
 }
 
+/**
+ * Command class
+ */
 export class Command implements CommandOptions {
   readonly name: string;
 
@@ -41,6 +44,9 @@ export class Command implements CommandOptions {
 
   readonly onlyAdmin: boolean;
 
+  /**
+   * @param { CommandOptions } options
+   */
   constructor(options: CommandOptions) {
     ({
       name: this.name,
@@ -51,5 +57,10 @@ export class Command implements CommandOptions {
     } = options);
   }
 
+  /**
+   * Run the command
+   * @param message Message event
+   * @param params Command params
+   */
   run?(message: Message, params: string[]): Promise<void>;
 }
