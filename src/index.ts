@@ -13,4 +13,6 @@ logger.level = config.logLevel;
 
 boot(config).catch((err) => {
   logger.error(`Failed to boot: ${String(err)}`);
+  logger.info('Exiting...');
+  process.exit(1);
 });
