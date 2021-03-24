@@ -63,8 +63,8 @@ export class Command implements CommandOptions {
    * @param params Command params
    */
   run?(
-    commands: Record<string, this>,
     message: Message,
-    params: string[]
+    params: string[],
+    commands: Record<string, this>
   ): Promise<void>;
 }
