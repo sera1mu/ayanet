@@ -6,13 +6,15 @@ import { Config } from './structures/Config';
 import { VERSION } from './util/constants';
 import { onReady } from './events/ready';
 import { onMessage } from './events/message';
-import { AyanetClient } from './structures/Client';
+import { CommandStore } from './structures/CommandStore';
 
 /**
  * Boot system
  * @returns { Discord.Client } Logged client
  */
-export const boot = async function bootSystem(config: Config): Promise<Client> {
+export const boot = async function bootSystem(
+  config: Config
+): Promise<{ client: Client; commandStore: CommandStore }> {
   process.title = 'Ayanet';
 
   // Show ASCII art
@@ -30,18 +32,17 @@ export const boot = async function bootSystem(config: Config): Promise<Client> {
 
   logger.info('Starting server...');
 
-  const client = new AyanetClient();
+  const client = new Client();
+  const commandStore = new CommandStore();
 
   // Events
   client.on('ready', () => onReady(client, logger));
   client.on('message', (message) => {
-    onMessage(client.commandStore, config, message).catch((err) =>
-      logger.error(err)
-    );
+    onMessage(commandStore, config, message).catch((err) => logger.error(err));
   });
 
   // Login client
   await client.login(config.token);
 
-  return client;
+  return { client, commandStore };
 };
