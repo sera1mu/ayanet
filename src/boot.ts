@@ -4,8 +4,8 @@ import { getLogger } from 'log4js';
 import { Client } from 'discord.js';
 import { Config } from './structures/Config';
 import { VERSION } from './util/constants';
-import { onReady } from './events/ready';
-import { onMessage } from './events/message';
+import { onReady } from './events/onReady';
+import { onMessage } from './events/onMessage';
 import { CommandStore } from './structures/CommandStore';
 import { registerCommands } from './util/registerCommands';
 
