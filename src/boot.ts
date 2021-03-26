@@ -34,7 +34,7 @@ export const boot = async function bootSystem(
   logger.info('Starting server...');
 
   const client = new Client();
-  const commandStore = registerCommands(new CommandStore(), client);
+  const commandStore = registerCommands(new CommandStore(), client, config);
 
   // Events
   client.on('ready', () => onReady(client, config, logger));
