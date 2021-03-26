@@ -9,7 +9,7 @@ export interface CommandOptions {
   /**
    * Command aliases
    */
-  readonly aliases: string[];
+  readonly aliases?: string[];
 
   /**
    * Command description
@@ -36,7 +36,7 @@ export interface CommandOptions {
 export class Command implements CommandOptions {
   readonly name: string;
 
-  readonly aliases: string[] = [];
+  readonly aliases?: string[] = [];
 
   readonly description: string;
 
