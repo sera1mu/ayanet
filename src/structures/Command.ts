@@ -62,9 +62,5 @@ export class Command implements CommandOptions {
    * @param message Message event
    * @param params Command params
    */
-  run?(
-    message: Message,
-    params: string[],
-    commands: Record<string, this>
-  ): Promise<void>;
+  run?(message: Message, params: string[]): Promise<void>;
 }
