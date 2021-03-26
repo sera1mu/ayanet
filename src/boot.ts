@@ -7,6 +7,7 @@ import { VERSION } from './util/constants';
 import { onReady } from './events/ready';
 import { onMessage } from './events/message';
 import { CommandStore } from './structures/CommandStore';
+import { registerCommands } from './util/registerCommands';
 
 /**
  * Boot system
@@ -33,10 +34,10 @@ export const boot = async function bootSystem(
   logger.info('Starting server...');
 
   const client = new Client();
-  const commandStore = new CommandStore();
+  const commandStore = registerCommands(new CommandStore(), client);
 
   // Events
-  client.on('ready', () => onReady(client, logger));
+  client.on('ready', () => onReady(client, config, logger));
   client.on('message', (message) => {
     onMessage(commandStore, config, message).catch((err) => logger.error(err));
   });
