@@ -1,5 +1,6 @@
 import { Client } from 'discord.js';
 import { Logger } from 'log4js';
+import { Config } from '../structures/Config';
 import { VERSION } from '../util/constants';
 
 /**
@@ -7,6 +8,7 @@ import { VERSION } from '../util/constants';
  */
 export const onReady = function clientOnReadyEvent(
   client: Client,
+  config: Config,
   logger: Logger
 ): void {
   // Set status
@@ -14,7 +16,7 @@ export const onReady = function clientOnReadyEvent(
     await client.user?.setPresence({
       activity: {
         type: 'PLAYING',
-        name: `v${VERSION}`,
+        name: `${config.prefix}help | v${VERSION}`,
       },
     });
   })()
