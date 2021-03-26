@@ -2,6 +2,7 @@ import { Message } from 'discord.js';
 import { getLogger } from 'log4js';
 import { Config } from '../structures/Config';
 import { CommandStore } from '../structures/CommandStore';
+import { generateMessageEventLog } from '../util/logsUtil';
 
 const logger = getLogger('message');
 
@@ -24,11 +25,7 @@ export const onMessage = async function clientOnMessageCreatedEvent(
         await command.run(message, parsedMessage.slice(1));
       }
     } catch (err) {
-      logger.error(
-        `Server=${message.guild?.id || 'unknown'} Channel=${
-          message.channel.id
-        } User=${message.author.id}: ${String(err)}`
-      );
+      logger.error(generateMessageEventLog(message, String(err)));
     }
   }
 };
