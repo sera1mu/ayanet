@@ -1,0 +1,11 @@
+#####
+# This is example config. Edit and copy this for use.
+#####
+
+token = "SUPER_SECRET_TOKEN_HERE"
+prefix = "ay."
+
+[logLevels]
+default = "info"
+boot = "info"
+message = "warn"
