@@ -23,6 +23,12 @@ export const onMessage = async function clientOnMessageCreatedEvent(
       const command = store.getCommand(parsedMessage[0]);
       if (typeof command.run !== 'undefined') {
         await command.run(message, parsedMessage.slice(1));
+        logger.info(
+          generateMessageEventLog(
+            message,
+            `The ${parsedMessage[0]} command has been executed.`
+          )
+        );
       }
     } catch (err) {
       logger.error(generateMessageEventLog(message, String(err)));
