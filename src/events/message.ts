@@ -20,7 +20,9 @@ export const onMessage = async function clientOnMessageCreatedEvent(
     const parsedMessage = message.content.replace(config.prefix, '').split(' ');
     try {
       const command = store.getCommand(parsedMessage[0]);
-      await command.run(message, parsedMessage.slice(1));
+      if (typeof command.run !== 'undefined') {
+        await command.run(message, parsedMessage.slice(1));
+      }
     } catch (err) {
       logger.error(err);
     }
