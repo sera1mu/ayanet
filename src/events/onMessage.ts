@@ -24,7 +24,11 @@ export const onMessage = async function clientOnMessageCreatedEvent(
         await command.run(message, parsedMessage.slice(1));
       }
     } catch (err) {
-      logger.error(err);
+      logger.error(
+        `Server=${message.guild?.id || 'unknown'} Channel=${
+          message.channel.id
+        } User=${message.author.id}: ${String(err)}`
+      );
     }
   }
 };
