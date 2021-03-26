@@ -16,7 +16,7 @@ interface IConfig {
   logLevel: LogLevel;
 
   /**
-   * The bot pre
+   * The bot prefix
    */
   prefix: string;
 }
