@@ -16,7 +16,11 @@ export class CommandStore {
    * @returns { Command }
    */
   getCommand(name: string): Command {
-    return this.commands[name];
+    const command = this.commands[name];
+    if (typeof command !== 'undefined') {
+      return command;
+    }
+    throw new Error(`${name} is not registered command.`);
   }
 
   /**
