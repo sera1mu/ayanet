@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import fs from 'fs';
 import path from 'path';
 import toml from 'toml';
@@ -11,24 +12,31 @@ interface IConfig {
   token: string;
 
   /**
-   * The logger level
-   */
-  logLevel: LogLevel;
-
-  /**
    * The bot prefix
    */
   prefix: string;
+
+  /**
+   * Logger levels
+   */
+  logLevels: Record<'default' | 'boot' | 'message', LogLevel>;
 }
+
+const isLogLevel = (value: string): value is LogLevel =>
+  value === 'trace' ||
+  value === 'debug' ||
+  value === 'info' ||
+  value === 'warn' ||
+  value === 'error' ||
+  value === 'fatal';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isConfig = (value: any): value is IConfig =>
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   typeof value.token === 'string' &&
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  typeof value.logLevel === 'string' &&
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  typeof value.prefix === 'string';
+  typeof value.prefix === 'string' &&
+  isLogLevel(value.logLevels.default) &&
+  isLogLevel(value.logLevels.boot) &&
+  isLogLevel(value.logLevels.message);
 
 /**
  * The configuration class
@@ -41,15 +49,15 @@ export class Config implements IConfig {
 
   token: string;
 
-  logLevel: LogLevel;
-
   prefix: string;
+
+  logLevels: Record<'default' | 'boot' | 'message', LogLevel>;
 
   constructor(filePath: string) {
     this.filePath = path.join(process.cwd(), filePath);
     ({
       token: this.token,
-      logLevel: this.logLevel,
+      logLevels: this.logLevels,
       prefix: this.prefix,
     } = Config.parseConfig(
       fs.readFileSync(this.filePath, { encoding: 'utf-8' })

@@ -10,7 +10,7 @@ if (typeof process.env.CONFIG_PATH === 'undefined') {
 const config = new Config(process.env.CONFIG_PATH);
 
 const logger = getLogger();
-logger.level = config.logLevel;
+logger.level = config.logLevels.default;
 
 boot(config).catch((err) => {
   logger.fatal('Failed to booting server');

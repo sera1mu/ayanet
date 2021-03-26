@@ -29,7 +29,7 @@ export const boot = async function bootSystem(
   console.log(`          |___/                      v${VERSION}\n`);
 
   const logger = getLogger('boot');
-  logger.level = config.logLevel;
+  logger.level = config.logLevels.boot;
 
   logger.info('Starting server...');
 

@@ -14,7 +14,7 @@ export const onMessage = async function clientOnMessageCreatedEvent(
   config: Config,
   message: Message
 ): Promise<void> {
-  logger.level = config.logLevel;
+  logger.level = config.logLevels.message;
   // Ignore when the message author was bot
   if (!message.author.bot && message.content.startsWith(config.prefix)) {
     const parsedMessage = message.content.replace(config.prefix, '').split(' ');
