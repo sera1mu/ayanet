@@ -12,14 +12,13 @@ export const onReady = function clientOnReadyEvent(
   logger: Logger
 ): void {
   // Set status
-  (async () => {
-    await client.user?.setPresence({
+  client.user
+    ?.setPresence({
       activity: {
         type: 'PLAYING',
         name: `${config.prefix}help | v${VERSION}`,
       },
-    });
-  })()
+    })
     .then(() => {
       logger.info('Done!');
       logger.info(
