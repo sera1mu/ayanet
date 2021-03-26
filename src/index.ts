@@ -12,8 +12,8 @@ const config = new Config(process.env.CONFIG_PATH);
 const logger = getLogger();
 logger.level = config.logLevel;
 
-export const client = boot(config).catch((err) => {
-  logger.error(`Failed to boot: ${String(err)}`);
-  logger.info('Exiting...');
+boot(config).catch((err) => {
+  logger.fatal('Failed to booting server');
+  logger.error(err);
   process.exit(1);
 });
