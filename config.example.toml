@@ -2,9 +2,12 @@
 # This is example config. Edit and copy this for use.
 #####
 
+# Bot token
 token = "SUPER_SECRET_TOKEN_HERE"
+# Command prefix
 prefix = "ay."
 
+### Log levels ###
 [logLevels]
 default = "info"
 boot = "info"
@@ -14,7 +17,7 @@ message = "warn"
 [database]
 # Hostname
 host = "localhost"
-# Port
+# Port (Default value: 3306)
 port = 3306
 # Database name
 database = "DATABASE_NAME_HERE"
