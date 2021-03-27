@@ -11,4 +11,4 @@ COPY docker/start.sh .
 RUN yarn install --prod
 RUN chmod +x start.sh
 
-CMD bash start.sh
+CMD [ "./start.sh" ]
