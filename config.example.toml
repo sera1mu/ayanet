@@ -9,3 +9,16 @@ prefix = "ay."
 default = "info"
 boot = "info"
 message = "warn"
+
+### Database Settings ###
+[database]
+# Hostname
+host = "localhost"
+# Port
+port = 3306
+# Database name
+database = "DATABASE_NAME_HERE"
+# User name
+user = "USER_NAME_HERE"
+# Password
+password = "PASSWORD_HERE"
