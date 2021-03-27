@@ -1,0 +1,33 @@
+version: '3'
+services:
+  database:
+    image: mariadb:10.5.9-focal
+    container_name: database
+    restart: always
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    networks:
+      - ayanet_network
+    environment:
+      MYSQL_DATABASE: 'ayanet'
+      MYSQL_USER: 'ayaya'
+      MYSQL_PASSWORD: 'kinmosaAyaya'
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+  ayanet:
+    build:
+      dockerfile: docker/Dockerfile
+      context: .
+    container_name: ayanet
+    restart: always
+    depends_on:
+      - database
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+    networks:
+      - ayanet_network
+
+networks:
+  ayanet_network:
+    driver: bridge
