@@ -12,6 +12,7 @@ prefix = "ay."
 default = "info"
 boot = "info"
 message = "warn"
+database = "warn"
 
 ### Database Settings ###
 [database]

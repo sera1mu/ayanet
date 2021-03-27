@@ -5,7 +5,10 @@ import toml from 'toml';
 
 type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal';
 
-interface DatabaseConfig {
+/**
+ * Database configuration
+ */
+export interface DatabaseConfig {
   /**
    * Database hostname
    */
@@ -46,8 +49,11 @@ interface IConfig {
   /**
    * Logger levels
    */
-  logLevels: Record<'default' | 'boot' | 'message', LogLevel>;
+  logLevels: Record<'default' | 'boot' | 'message' | 'database', LogLevel>;
 
+  /**
+   * Database configuration
+   */
   database: DatabaseConfig;
 }
 
@@ -80,7 +86,7 @@ export class Config implements IConfig {
 
   prefix: string;
 
-  logLevels: Record<'default' | 'boot' | 'message', LogLevel>;
+  logLevels: Record<'default' | 'boot' | 'message' | 'database', LogLevel>;
 
   database: DatabaseConfig;
 
