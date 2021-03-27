@@ -33,6 +33,11 @@ export interface DatabaseConfig {
    * Database password
    */
   password: string;
+
+  /**
+   * Tables prefix
+   */
+  prefix: string;
 }
 
 interface IConfig {

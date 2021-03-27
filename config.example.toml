@@ -26,3 +26,5 @@ database = "DATABASE_NAME_HERE"
 user = "USER_NAME_HERE"
 # Password
 password = "PASSWORD_HERE"
+# Tables prefix
+prefix = ""
