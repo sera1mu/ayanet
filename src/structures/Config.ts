@@ -5,6 +5,41 @@ import toml from 'toml';
 
 type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal';
 
+/**
+ * Database configuration
+ */
+export interface DatabaseConfig {
+  /**
+   * Database hostname
+   */
+  host: string;
+
+  /**
+   * Database port (Default value: 3306)
+   */
+  port?: number;
+
+  /**
+   * Database name
+   */
+  database: string;
+
+  /**
+   * Database user
+   */
+  user: string;
+
+  /**
+   * Database password
+   */
+  password: string;
+
+  /**
+   * Tables prefix
+   */
+  prefix: string;
+}
+
 interface IConfig {
   /**
    * The bot token
@@ -19,7 +54,12 @@ interface IConfig {
   /**
    * Logger levels
    */
-  logLevels: Record<'default' | 'boot' | 'message', LogLevel>;
+  logLevels: Record<'default' | 'boot' | 'message' | 'database', LogLevel>;
+
+  /**
+   * Database configuration
+   */
+  database: DatabaseConfig;
 }
 
 const isLogLevel = (value: string): value is LogLevel =>
@@ -51,14 +91,17 @@ export class Config implements IConfig {
 
   prefix: string;
 
-  logLevels: Record<'default' | 'boot' | 'message', LogLevel>;
+  logLevels: Record<'default' | 'boot' | 'message' | 'database', LogLevel>;
+
+  database: DatabaseConfig;
 
   constructor(filePath: string) {
     this.filePath = path.join(process.cwd(), filePath);
     ({
       token: this.token,
-      logLevels: this.logLevels,
       prefix: this.prefix,
+      logLevels: this.logLevels,
+      database: this.database,
     } = Config.parseConfig(
       fs.readFileSync(this.filePath, { encoding: 'utf-8' })
     ));

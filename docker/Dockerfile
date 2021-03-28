@@ -14,5 +14,4 @@ RUN yarn install --production=true
 
 # Copy build files
 COPY dist/ .
-
 CMD [ "./start.sh" ]
