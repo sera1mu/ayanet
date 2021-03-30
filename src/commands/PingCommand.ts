@@ -15,8 +15,6 @@ export class PingCommand extends Command {
   }
 
   async run(message: Message): Promise<void> {
-    await message.channel.send(
-      `ポン! \`${Math.round(this.client.ws.ping)}ms\``
-    );
+    await message.channel.send(`ポン! ${Math.round(this.client.ws.ping)}ms`);
   }
 }
