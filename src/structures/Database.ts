@@ -1,9 +1,12 @@
 import { getLogger, Logger } from 'log4js';
 import { createPool, Pool } from 'mariadb';
 import { format } from 'sqlstring';
-import { generateDatetime, trimIndent } from '../util/misc';
+import { generateDatetime } from '../util/misc';
 import { Config, DatabaseConfig } from './Config';
 
+/**
+ * Database connector
+ */
 export class Database implements DatabaseConfig {
   host: string;
 
@@ -27,6 +30,10 @@ export class Database implements DatabaseConfig {
    */
   logger: Logger;
 
+  /**
+   * @constructor
+   * @param config Configuration
+   */
   constructor(config: Config) {
     ({
       host: this.host,
@@ -61,38 +68,22 @@ export class Database implements DatabaseConfig {
    */
   async init(): Promise<void> {
     const queries = [
-      `CREATE TABLE IF NOT EXISTS channels (
-       id VARCHAR(10) NOT NULL PRIMARY KEY,
-        description VARCHAR(50),
-        created_at DATETIME NOT NULL,
-        always BOOLEAN NOT NULL,
-        author_id VARCHAR(18) NOT NULL,
-        private BOOLEAN NOT NULL)`,
-      `CREATE TABLE IF NOT EXISTS connected_hooks (
-       webhook_url VARCHAR(200) NOT NULL PRIMARY KEY,
-        connected_at DATETIME NOT NULL,
-        guild_id VARCHAR(18) NOT NULL,
-        connected_channel_id VARCHAR(18) NOT NULL,
-        global_channel_id VARCHAR(10) NOT NULL,
-        INDEX connected_hooks_index (global_channel_id),
-        FOREIGN key channels (id))`,
-      `CREATE TABLE IF NOT EXISTS messages (
-        id VARCHAR(18) NOT NULL PRIMARY KEY,
-        added_at DATETIME NOT NULL,
-        author_id VARCHAR(18) NOT NULL,
-        content JSON NOT NULL,
-        CHECK(JSON_VALID(content)))`,
+      'CREATE TABLE IF NOT EXISTS channels( id VARCHAR(10) NOT NULL PRIMARY KEY, description VARCHAR(50), created_at DATETIME NOT NULL, always BOOLEAN NOT NULL, author_id VARCHAR(18) NOT NULL, private BOOLEAN NOT NULL)',
+      'CREATE TABLE IF NOT EXISTS connected_hooks( webhook_url VARCHAR(200) NOT NULL PRIMARY KEY, connected_at DATETIME NOT NULL, guild_id VARCHAR(18) NOT NULL, connected_channel_id VARCHAR(18) NOT NULL, global_channel_id VARCHAR(10) NOT NULL, INDEX connected_hooks_index(global_channel_id), FOREIGN key channels(id))',
+      'CREATE TABLE IF NOT EXISTS messages( id VARCHAR(18) NOT NULL PRIMARY KEY, added_at DATETIME NOT NULL, author_id VARCHAR(18) NOT NULL, content JSON NOT NULL, CHECK(JSON_VALID(content))); ',
     ];
 
+    // Run queries
     for await (const query of queries) {
       try {
-        await this.runQuery(trimIndent(query));
+        await this.runQuery(query);
       } catch (err) {
         const message = `Failed to initialize database: ${String(err)}`;
         this.logger.error(message);
         throw new Error(message);
       }
     }
+
     this.logger.info('The database has been initialized.');
   }
 
@@ -149,8 +140,11 @@ export class Database implements DatabaseConfig {
 
   /**
    * Run query safely
+   * @param query Query
+   * @param params Query params
    */
-  async runQuery(query: string, params?: string[]): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async runQuery(query: string, params?: any[]): Promise<void> {
     try {
       await this.pool.query(Database.prepareQuery(query, params));
     } catch (err) {
@@ -160,8 +154,11 @@ export class Database implements DatabaseConfig {
 
   /**
    * Prepare query
+   * @param query Query
+   * @param params Query params
    */
-  static prepareQuery(query: string, params?: string[]): string {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static prepareQuery(query: string, params?: any[]): string {
     return format(query, params);
   }
 }
