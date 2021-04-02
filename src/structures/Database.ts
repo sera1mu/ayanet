@@ -1,3 +1,4 @@
+import { Message } from 'discord.js';
 import { getLogger, Logger } from 'log4js';
 import { createPool, Pool } from 'mariadb';
 import { format } from 'sqlstring';
@@ -124,7 +125,69 @@ export class Database implements DatabaseConfig {
   }
 
   /**
-   * Close all database connection.
+   * Add new connected hook to conencted_hooks table
+   * @param webhookUrl Webhook URL
+   * @param connectedBy Connected user ID
+   * @param guildId Guild ID
+   * @param connectedChannelId Connected channel ID (Discord)
+   * @param globalChannelId Global channel ID (Ayanet)
+   */
+  async addNewConnectedHook(
+    webhookUrl: string,
+    connectedBy: string,
+    guildId: string,
+    connectedChannelId: string,
+    globalChannelId: string
+  ): Promise<void> {
+    const query = 'INSERT INTO channels VALUES (?, ?, ?, ?, ?, ?)';
+    const connectedAt = generateDatetime(new Date());
+
+    try {
+      // Run query
+      await this.runQuery(query, [
+        webhookUrl,
+        connectedAt,
+        connectedBy,
+        guildId,
+        connectedChannelId,
+        globalChannelId,
+      ]);
+      this.logger.info(`Webhook=${webhookUrl}: Added new connected hook.`);
+    } catch (err) {
+      const message = `Webhook=${webhookUrl}: Failed to add new connnected hook.`;
+      this.logger.error(message);
+      throw new Error(message);
+    }
+  }
+
+  /**
+   * Add new message to messages table
+   * @param channelId Channel ID (Ayanet)
+   * @param message Adding message
+   */
+  async addNewMessage(channelId: string, message: Message): Promise<void> {
+    const query = 'INSERT INTO channels VALUES (?, ?, ?, ?, ?);';
+    const addedAt = generateDatetime(message.createdAt);
+    const content = JSON.stringify(message.toJSON());
+
+    try {
+      // Run query
+      await this.runQuery(query, [
+        message.id,
+        channelId,
+        addedAt,
+        message.author.id,
+        content,
+      ]);
+    } catch (err) {
+      const logMessage = `User=${message.author.id} Channel=${channelId} Message=${message.id}: Added message.`;
+      this.logger.error(logMessage);
+      throw new Error(logMessage);
+    }
+  }
+
+  /**
+   * Close all database connection
    */
   async close(): Promise<void> {
     try {
