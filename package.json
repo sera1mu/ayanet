@@ -15,9 +15,11 @@
     "lint:editorconfig": "editorconfig-checker -exclude '(?:LICENSE|dist)'"
   },
   "dependencies": {
+    "@types/node-fetch": "^2.5.8",
     "discord.js": "^12.5.1",
     "log4js": "^6.3.0",
     "mariadb": "^2.5.3",
+    "node-fetch": "^2.6.1",
     "sqlstring": "^2.3.2",
     "toml": "^3.0.0"
   },
