@@ -25,7 +25,9 @@ export const onMessage = async function clientOnMessageCreatedEvent(
         await command.run(message, parsedMessage.slice(1));
         logger.info(
           generateMessageEventLog(
-            message,
+            message.guild?.id,
+            message.channel.id,
+            message.author.id,
             `The ${parsedMessage[0]} command has been executed.`
           )
         );

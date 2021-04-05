@@ -1,14 +1,15 @@
-import { Message } from 'discord.js';
-
 /**
  * Generate detailed log for message event
- * @returns { string } Guild={guildId} Channel={channelId} User={userId}: {message}
+ * @param guildId Guild ID
+ * @param channelId Channel ID
+ * @param userId Message author ID
+ * @returns Guild={guildId} Channel={channelId} User={userId}: {message}
  */
 export const generateMessageEventLog = function generateMessageEventDetailedLog(
-  message: Message,
+  guildId: string,
+  channelId: string,
+  userId: string,
   content: string
 ): string {
-  return `Guild=${message.guild?.id || 'unknown'} Channel=${
-    message.channel.id || 'unknown'
-  } User=${message.author.id}: ${content}`;
+  return `Guild=${guildId} Channel=${channelId} User=${userId}: ${content}`;
 };
