@@ -98,10 +98,10 @@ export class Database implements DatabaseConfig {
    */
   async createNewChannel(
     id: string,
-    description: ?string,
     always: boolean,
     authorId: string,
-    private: boolean
+    isPrivate: boolean,
+    description?: string
   ): Promise<void> {
     const query = 'INSERT INTO `channels` VALUES (?, ?, ?, ?, ?, ?)';
     const createdAt = generateDatetime(new Date());
@@ -114,7 +114,7 @@ export class Database implements DatabaseConfig {
         createdAt,
         always,
         authorId,
-        private,
+        isPrivate,
       ]);
       this.logger.info(`User=${authorId}: ${id} channel has been created.`);
     } catch (err) {
