@@ -25,7 +25,7 @@
     "@types/node": "^14.14.37",
     "@types/sqlstring": "^2.3.0",
     "@types/ws": "^7.4.1",
-    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.21.0",
     "editorconfig-checker": "^4.0.2",
     "eslint": "^7.23.0",
